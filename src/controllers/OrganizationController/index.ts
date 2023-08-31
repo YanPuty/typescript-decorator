@@ -16,8 +16,13 @@ export class OrganizationController {
   }
 
   @GET('/v1/:id')
-  findOneById(req: Request): AB {
-    return { id: Number(req.params.id) };
+  @Middleware([loggerA, loggerC])
+  findOneById(req: Request): Promise<AB> {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        resolve({ id: Number(req.params.id) * 2 });
+      }, 3000); // Simulating a 3-second delay
+    });
   }
 
   @POST('/v1/create')

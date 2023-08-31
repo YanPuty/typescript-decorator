@@ -2,7 +2,6 @@ import { META_MIDDLEWARE } from '../@types/meta';
 import { MiddlewareFunction } from '../interfaces/methods';
 
 export const Middleware = (middleWaresCB: MiddlewareFunction | MiddlewareFunction[]): MethodDecorator => {
-  console.log(middleWaresCB);
   // `target` equals our class, `propertyKey` equals our decorated method name
   return registerMiddleWares(middleWaresCB);
 };

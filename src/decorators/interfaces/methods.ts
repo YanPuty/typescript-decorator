@@ -7,4 +7,9 @@ export interface IMetaMethod {
   middleware: MiddlewareFunction[];
 }
 
+export interface IMetaMiddleWare {
+  methodName: string | symbol;
+  middleware: MiddlewareFunction;
+}
+
 export type MiddlewareFunction = (req: Request, res: Response, next: NextFunction) => void;
