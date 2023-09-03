@@ -1,6 +1,6 @@
 import 'reflect-metadata';
 
-import { META_CONTROLLER } from './@types/meta';
+import { META_CONTROLLER } from '../../@types/meta';
 
 export function Controller(path: string = ''): ClassDecorator {
   return function (target: any) {

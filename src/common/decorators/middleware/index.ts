@@ -1,5 +1,5 @@
-import { META_MIDDLEWARE } from '../@types/meta';
-import { MiddlewareFunction } from '../interfaces/methods';
+import { META_MIDDLEWARE } from '../../@types/meta';
+import { MiddlewareFunction } from '../../interfaces/methods';
 
 export const Middleware = (middleWaresCB: MiddlewareFunction | MiddlewareFunction[]): MethodDecorator => {
   // `target` equals our class, `propertyKey` equals our decorated method name

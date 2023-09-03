@@ -1,6 +1,6 @@
 import express from 'express';
 
-export async function loggerA(_: express.Request, _R: express.Response, next: express.NextFunction) {
+export async function loggerA(_: express.Request, _R: express.Response, next: express.NextFunction): Promise<void> {
   try {
     console.log("======LOGGER A======");
     next();

@@ -1,5 +1,4 @@
-import { Controller } from '../../decorators/controller';
-import { GET } from '../../decorators/methods';
+import { Controller, GET } from '../../common';
 
 @Controller('/users')
 export class UserController {

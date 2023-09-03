@@ -1,40 +1,27 @@
 import { Request } from 'express';
 
-import { Controller } from '../../decorators/controller';
-import { GET, POST } from '../../decorators/methods';
-import { Middleware } from '../../decorators/middleware';
-import { loggerA, loggerB, loggerC } from '../../middlewares';
+import { Controller, GET, POST } from '../../common';
+import { Organization } from '../../models';
 
 @Controller('/organization')
 export class OrganizationController {
 
   @GET('/v1/list')
-  @Middleware(loggerB)
-  @Middleware([loggerA, loggerC])
-  getAllOrganization(): string {
-    return 'Organization world!';
+  getAllOrganization() {
+    const organization = Organization.find({});
+    return organization;
   }
 
   @GET('/v1/:id')
-  @Middleware([loggerA, loggerC])
-  findOneById(req: Request): Promise<AB> {
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        resolve({ id: Number(req.params.id) * 2 });
-      }, 3000); // Simulating a 3-second delay
-    });
+  findOneById(req: Request) {
+    const { id } = req.params;
+    const organization = Organization.findById(id);
+    return organization;
   }
 
   @POST('/v1/create')
-  createOrganization(): AM {
-    return { message: 'this is create' };
+  async createOrganization(req: Request) {
+    const object = new Organization(req.body);
+    return object.save();
   }
-}
-
-interface AB {
-  id: number;
-}
-
-interface AM {
-  message: string;
 }
