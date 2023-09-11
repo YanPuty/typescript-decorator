@@ -1,4 +1,3 @@
-import bodyParser from 'body-parser';
 import dotenv from 'dotenv';
 import express, { Application, Request, Response } from 'express';
 import mongoose, { ConnectOptions } from 'mongoose';
@@ -25,26 +24,23 @@ class ServerInstance {
     this.app.set("port", process.env.PORT ?? 3000);
 
     // add static paths
-    this.app.use(express.static(path.join(__dirname, "public")));
+    this.app.use(express.static(path.join(__dirname, '..', "public")));
 
     // configure view
     this.app.set("views", path.join(__dirname, "views"));
     this.app.set("view engine", "ejs");
 
+    // use json form parser middlware
+    this.app.use(express.urlencoded({ extended: true }));
+    this.app.use(express.json());
+
     // use logger middlware
     this.app.use(logger("dev"));
-
-    // use json form parser middlware
-    this.app.use(bodyParser.json());
-
-    // use query string parser middlware
-    this.app.use(bodyParser.urlencoded({
-      extended: true
-    }));
   }
 
   private _routes() {
     new Server(this.app).registerController(controllers);
+
     // catch 404 and forward to error handler
     this.app.use((_: Request, _R: Response,) => {
       throw new NotFoundError('Not Found')
@@ -68,7 +64,7 @@ class ServerInstance {
   }
 
   private _initDatabaseConnection(): Promise<typeof mongoose> {
-    const URL = process.env.MONGO_URL || "mongodb://127.0.0.1:27017";
+    const URL = process.env.MONGO_URL ?? "mongodb://127.0.0.1:27017";
     const auth: ConnectOptions = {
       user: process.env.MONGO_USER,
       pass: process.env.MONGO_PASSWORD,

@@ -1,5 +1,8 @@
 import express from 'express';
 
+export { multerMiddleWare } from "./multer";
+
+
 export async function loggerA(_: express.Request, _R: express.Response, next: express.NextFunction): Promise<void> {
   try {
     console.log("======LOGGER A======");
