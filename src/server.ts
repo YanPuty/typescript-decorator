@@ -1,6 +1,6 @@
 import dotenv from 'dotenv';
 import express, { Application, Request, Response } from 'express';
-import mongoose, { ConnectOptions } from 'mongoose';
+import mongoose from 'mongoose';
 import logger from 'morgan';
 import path from 'path';
 
@@ -14,7 +14,7 @@ class ServerInstance {
   constructor() {
     this.app = express();
     this.config();
-    this._initDatabaseConnection();
+    // this._initDatabaseConnection();
   }
 
   private config() {
@@ -63,21 +63,21 @@ class ServerInstance {
     })
   }
 
-  private _initDatabaseConnection(): Promise<typeof mongoose> {
-    const URL = process.env.MONGO_URL ?? "mongodb://127.0.0.1:27017";
-    const auth: ConnectOptions = {
-      user: process.env.MONGO_USER,
-      pass: process.env.MONGO_PASSWORD,
-      dbName: process.env.MONGO_DB,
-    };
-    return mongoose.connect(URL, auth)
-  }
+  // private _initDatabaseConnection(): Promise<typeof mongoose> {
+  //   const URL = process.env.MONGO_URL || "mongodb://127.0.0.1:27017";
+  //   const auth: ConnectOptions = {
+  //     user: process.env.MONGO_USER,
+  //     pass: process.env.MONGO_PASSWORD,
+  //     dbName: process.env.MONGO_DB,
+  //   };
+  //   return mongoose.connect(URL, auth)
+  // }
 
   startAppInstance() {
     this.app.listen(this.app.get("port"), () => {
       this._routes();
-      this.db.on('error', console.error.bind(console, 'MongoDB connection error:'));
-      this.db.once('open', () => console.log("Database Connected!"));
+      // this.db.on('error', console.error.bind(console, 'MongoDB connection error:'));
+      // this.db.once('open', () => console.log("Database Connected!"));
       console.log(("App is running at http://localhost:%d in %s mode"), this.app.get("port"), this.app.get("env"));
       console.log("Press CTRL-C to stop\n");
     });
