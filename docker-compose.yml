@@ -1,0 +1,35 @@
+# Use root/example as user/password credentials
+version: '3.8'
+
+volumes:
+    mongodb:
+
+services:
+    mongodb:
+        image: mongo
+        container_name: mongodb
+        restart: always
+        ports:
+            - 27017:27017
+        environment:
+            MONGO_INITDB_ROOT_USERNAME: root
+            MONGO_INITDB_ROOT_PASSWORD: password
+            MONGO_INITDB_DATABASE: test
+        volumes:
+            - ./.docker/dbdata:/data/db
+            - ./.docker/mongo:/docker-entrypoint-initdb.d
+
+    mongo-express:
+        image: mongo-express
+        container_name: mongodb-express
+        restart: always
+        ports:
+            - 8081:8081
+        environment:
+            ME_CONFIG_MONGODB_ADMINUSERNAME: root
+            ME_CONFIG_MONGODB_ADMINPASSWORD: password
+            ME_CONFIG_MONGODB_URL: mongodb://root:example@mongo:27017/
+#docker run -d -p 27017:27017 -e MONGO_INITDB_ROOT_USERNAME=root -e MONGO_INITDB_ROOT_PASSWORD=password --name=mongodb mongo:latest
+#docker exec 8ba1092f05b1 -it bash
+
+#7fa811e34edebdcd213ab838f6d351fc9d9aece63f923b5495eae1eab41ca922
